@@ -1,9 +1,11 @@
 package com.example.rmsoft.global.config;
 
 import com.example.rmsoft.domain.auth.filter.JwtAuthenticationFilter;
+import com.example.rmsoft.domain.auth.filter.JwtVerificationFilter;
 import com.example.rmsoft.domain.auth.handler.UserAuthenticationFailureHandler;
 import com.example.rmsoft.domain.auth.handler.UserAuthenticationSuccessHandler;
 import com.example.rmsoft.domain.auth.jwt.JwtTokenizer;
+import com.example.rmsoft.domain.auth.userdetails.UserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +32,7 @@ public class SecurityConfiguration {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final UserAuthenticationSuccessHandler userAuthenticationSuccessHandler;
     private final UserAuthenticationFailureHandler userAuthenticationFailureHandler;
+    private final UserDetailService userDetailService;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -40,18 +43,23 @@ public class SecurityConfiguration {
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
+                .addFilter(corsFilter())
+                .addFilter(jwtAuthenticationFilter(authenticationManager()))
+                .addFilterAfter(jwtVerificationFilter(userDetailService, jwtTokenizer), JwtAuthenticationFilter.class)
                 .authorizeHttpRequests(authorizeRequest -> authorizeRequest.anyRequest().permitAll());
 
         return http.build();
     }
 
-    @Bean
-    AuthenticationManager authenticationManager() throws Exception {
+    private JwtVerificationFilter jwtVerificationFilter(UserDetailService userDetailService, JwtTokenizer jwtTokenizer) {
+        return new JwtVerificationFilter(userDetailService, jwtTokenizer);
+    }
+
+    private AuthenticationManager authenticationManager() throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+    private JwtAuthenticationFilter jwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
 
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager);
@@ -62,8 +70,7 @@ public class SecurityConfiguration {
         return jwtAuthenticationFilter;
     }
 
-    @Bean
-    public CorsFilter corsFilter() {
+    private CorsFilter corsFilter() {
 
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 

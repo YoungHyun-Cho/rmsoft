@@ -1,5 +1,6 @@
 package com.example.rmsoft.domain.auth.handler;
 
+import com.example.rmsoft.domain.user.entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

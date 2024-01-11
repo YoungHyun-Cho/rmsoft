@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,5 +27,6 @@ public class Solution extends Auditable {
     private String version;
 
     @Column(nullable = false, name = "operating_system")
-    private String os;
+    @ElementCollection
+    private List<String> os;
 }

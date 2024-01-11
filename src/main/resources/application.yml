@@ -8,3 +8,14 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+jwt:
+  key: "rmsoft_coding_test_subscription_management_program"
+  access-token-expiration-minutes: 10
+  refresh-token-expiration-minutes: 60
+
+logging:
+  level:
+    org:
+      springframework:
+        security=DEBUG:

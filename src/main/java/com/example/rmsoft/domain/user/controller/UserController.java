@@ -5,7 +5,6 @@ import com.example.rmsoft.domain.user.entity.User;
 import com.example.rmsoft.domain.user.mapper.UserMapper;
 import com.example.rmsoft.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;

@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -35,11 +37,11 @@ public class Subscription extends Auditable {
     private String type;
 
     @Column(nullable = false)
-    private Integer storageUsage;
+    private Integer storageUsage = 0;
 
     @Column(nullable = false)
     private Integer storageCapacity;
 
     @Column(nullable = false)
-    private String expiration;
+    private LocalDateTime expiration;
 }

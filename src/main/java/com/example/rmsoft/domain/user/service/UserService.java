@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -23,11 +25,16 @@ public class UserService {
 
     public User findUser(String email) {
 
-        return findVerifiedUser(email);
+        return findVerifiedUser(userRepository.findByEmail(email));
     }
 
-    private User findVerifiedUser(String email) {
+    public User findUser(Long userId) {
 
-        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User Not Found"));
+        return findVerifiedUser(userRepository.findById(userId));
+    }
+
+    private User findVerifiedUser(Optional<User> optionalUser) {
+
+        return optionalUser.orElseThrow(() -> new RuntimeException("User Not Found"));
     }
 }

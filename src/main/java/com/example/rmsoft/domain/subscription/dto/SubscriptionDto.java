@@ -1,14 +1,26 @@
 package com.example.rmsoft.domain.subscription.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SubscriptionDto {
 
-    @NotBlank
-    private Integer userId;
+    private Long id;
 
     @NotBlank
-    private Integer solutionId;
+    private Long userId;
+
+    @NotBlank
+    private Long solutionId;
 
     @NotBlank
     private Integer userCount;
@@ -17,5 +29,10 @@ public class SubscriptionDto {
     private String type;
 
     @NotBlank
+    private LocalDateTime expiration;
+
+    @NotBlank
     private Integer storageCapacity;
+
+    private Integer storageUsage;
 }

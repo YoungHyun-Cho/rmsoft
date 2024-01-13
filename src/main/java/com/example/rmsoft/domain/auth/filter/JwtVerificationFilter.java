@@ -32,9 +32,11 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
 
+        Boolean isSignUp = request.getRequestURI().equals("/users") && request.getMethod().equals("POST");
+        Boolean isLogin = request.getRequestURI().equals("/auth/login") && request.getMethod().equals("POST");
         String authorization = request.getHeader("Authorization");
 
-        return authorization == null || !authorization.startsWith("Bearer");
+        return authorization == null || !authorization.startsWith("Bearer") || isSignUp || isLogin;
     }
 
     @Override

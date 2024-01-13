@@ -1,6 +1,7 @@
 package com.example.rmsoft.domain.solution.entity;
 
 import com.example.rmsoft.global.audit.Auditable;
+import com.example.rmsoft.global.value.OperatingSystem;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +27,11 @@ public class Solution extends Auditable {
     @Column(nullable = false)
     private String version;
 
+    @Column(nullable = false)
+    private Integer pricePerMonth;
+
     @Column(nullable = false, name = "operating_system")
+    @Enumerated(EnumType.STRING)
     @ElementCollection
-    private List<String> os;
+    private List<OperatingSystem> os;
 }

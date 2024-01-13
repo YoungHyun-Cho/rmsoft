@@ -2,6 +2,7 @@ package com.example.rmsoft.global.config;
 
 import com.example.rmsoft.domain.solution.entity.Solution;
 import com.example.rmsoft.domain.solution.service.SolutionService;
+import com.example.rmsoft.global.value.OperatingSystem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,9 +21,18 @@ public class DummyDataConfig {
 
         List<Solution> solutions = new ArrayList<>();
 
-        solutions.add(new Solution(1L, "ArchiveSolution", "1.3", new ArrayList<>(Arrays.asList("Windows", "Mac", "Linux"))));
-        solutions.add(new Solution(2L, "Cliveworks", "1.5", new ArrayList<>(Arrays.asList("Windows", "Mac"))));
-        solutions.add(new Solution(3L, "Archivistore", "1.7", new ArrayList<>(Arrays.asList("Windows", "Linux"))));
+        solutions.add(new Solution(
+                1L, "ArchiveSolution", "1.3", 10000,
+                new ArrayList<>(Arrays.asList(OperatingSystem.WINDOWS, OperatingSystem.MAC, OperatingSystem.LINUX))
+        ));
+        solutions.add(new Solution(
+                2L, "Cliveworks", "1.5", 20000,
+                new ArrayList<>(Arrays.asList(OperatingSystem.WINDOWS, OperatingSystem.MAC))
+        ));
+        solutions.add(new Solution(
+                3L, "Archivistore", "1.7", 30000,
+                new ArrayList<>(Arrays.asList(OperatingSystem.WINDOWS, OperatingSystem.LINUX))
+        ));
 
         return solutions;
     }

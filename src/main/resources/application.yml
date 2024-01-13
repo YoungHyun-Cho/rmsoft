@@ -11,7 +11,7 @@ spring:
 
 jwt:
   key: "rmsoft_coding_test_subscription_management_program"
-  access-token-expiration-minutes: 10
+  access-token-expiration-minutes: 60
   refresh-token-expiration-minutes: 60
 
 logging:

@@ -26,7 +26,7 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfig {
 
     private final JwtTokenizer jwtTokenizer;
     private final AuthenticationConfiguration authenticationConfiguration;

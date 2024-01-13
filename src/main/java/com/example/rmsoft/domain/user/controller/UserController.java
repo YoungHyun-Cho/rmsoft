@@ -4,6 +4,7 @@ import com.example.rmsoft.domain.user.dto.UserDto;
 import com.example.rmsoft.domain.user.entity.User;
 import com.example.rmsoft.domain.user.mapper.UserMapper;
 import com.example.rmsoft.domain.user.service.UserService;
+import com.example.rmsoft.global.util.Utility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +25,7 @@ public class UserController {
 
         User user = userService.createUser(userMapper.userDtoToUser(userDto));
 
-        URI uri =
-                UriComponentsBuilder
-                        .newInstance()
-                        .path("/users/{user-id}")
-                        .buildAndExpand(user.getId())
-                        .toUri();
+        URI uri = Utility.makeURI("/users/{user-id}", user.getId());
 
         return ResponseEntity.created(uri).build();
     }

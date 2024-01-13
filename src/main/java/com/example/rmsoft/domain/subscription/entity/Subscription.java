@@ -3,6 +3,7 @@ package com.example.rmsoft.domain.subscription.entity;
 import com.example.rmsoft.domain.solution.entity.Solution;
 import com.example.rmsoft.domain.user.entity.User;
 import com.example.rmsoft.global.audit.Auditable;
+import com.example.rmsoft.global.value.ServiceType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,14 +35,18 @@ public class Subscription extends Auditable {
     private Integer userCount;
 
     @Column(nullable = false)
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private ServiceType serviceType;
 
     @Column(nullable = false)
-    private Integer storageUsage = 0;
+    private Integer storageUsage;
 
     @Column(nullable = false)
     private Integer storageCapacity;
 
     @Column(nullable = false)
     private LocalDateTime expiration;
+
+    @Column(nullable = false)
+    private Integer totalPrice;
 }

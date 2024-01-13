@@ -5,6 +5,8 @@ import com.example.rmsoft.domain.solution.service.SolutionService;
 import com.example.rmsoft.domain.subscription.entity.Subscription;
 import com.example.rmsoft.domain.subscription.repository.SubscriptionRepository;
 import com.example.rmsoft.global.config.PriceConfig;
+import com.example.rmsoft.global.exception.BusinessLogicException;
+import com.example.rmsoft.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ public class SubscriptionService {
 
     public Subscription createSubscription(Subscription subscription) {
 
+        verifyExistSubscription(subscription);
+
         subscription.setTotalPrice(calculateTotalPrice(subscription));
         subscription.setStorageUsage(0);
 
@@ -33,7 +37,8 @@ public class SubscriptionService {
 
     public Subscription updateExpiration(Long subscriptionId, LocalDateTime expiration) {
 
-        Subscription subscription = subscriptionRepository.findById(subscriptionId).orElseThrow(() -> new RuntimeException("Subscription Not Found"));
+        Subscription subscription = subscriptionRepository.findById(subscriptionId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.SUBSCRIPTION_NOT_FOUND));
 
         subscription.setExpiration(expiration);
         subscription.setTotalPrice(calculateTotalPrice(subscription));
@@ -53,5 +58,17 @@ public class SubscriptionService {
         Integer storagePrice = PriceConfig.multiplierByStorage(subscription.getStorageCapacity());
 
         return (servicePrice.intValue() + storagePrice) * period.getDays();
+    }
+
+    private void verifyExistSubscription(Subscription subscription) {
+
+        List<Subscription> foundSubscriptions = findAllSubscriptions(subscription.getUser().getId());
+
+        foundSubscriptions.stream().forEach(foundSubscription -> {
+            if (foundSubscription.getUser().getId() == subscription.getUser().getId()
+                    && foundSubscription.getSolution().getId() == subscription.getSolution().getId()) {
+                throw new BusinessLogicException(ExceptionCode.SUBSCRIPTION_EXISTS);
+            }
+        });
     }
 }

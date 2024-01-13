@@ -2,6 +2,8 @@ package com.example.rmsoft.domain.auth.userdetails;
 
 import com.example.rmsoft.domain.user.entity.User;
 import com.example.rmsoft.domain.user.repository.UserRepository;
+import com.example.rmsoft.global.exception.BusinessLogicException;
+import com.example.rmsoft.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +21,7 @@ public class UserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) {
 
         Optional<User> optionalUser = userRepository.findByEmail(email);
-        User foundUser = optionalUser.orElseThrow(() -> new RuntimeException("User Not Found"));
+        User foundUser = optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
         return new UserDetail(foundUser);
     }
 }

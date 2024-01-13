@@ -2,6 +2,8 @@ package com.example.rmsoft.domain.solution.service;
 
 import com.example.rmsoft.domain.solution.entity.Solution;
 import com.example.rmsoft.domain.solution.repository.SolutionRepository;
+import com.example.rmsoft.global.exception.BusinessLogicException;
+import com.example.rmsoft.global.exception.ExceptionCode;
 import com.example.rmsoft.global.value.OperatingSystem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,14 +21,14 @@ public class SolutionService {
 
     public Solution findSolution(Long solutionId) {
 
-        return solutionRepository.findById(solutionId).orElseThrow(() -> new RuntimeException("Solution Not Found"));
+        return solutionRepository.findById(solutionId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.SOLUTION_NOT_FOUND));
     }
 
     public Solution findSolution(Long solutionId, OperatingSystem os) {
 
         Solution foundSolution = findSolution(solutionId);
 
-        if (!foundSolution.getOs().contains(os)) throw new RuntimeException("Not Supported OS");
+        if (!foundSolution.getOs().contains(os)) throw new BusinessLogicException(ExceptionCode.NOT_SUPPORTED_OS);
 
         return foundSolution;
     }

@@ -32,6 +32,11 @@ public class UserService {
         return findVerifiedUser(userRepository.findById(userId));
     }
 
+    public User findUser(String email) {
+
+        return findVerifiedUser(userRepository.findByEmail(email));
+    }
+
     private User findVerifiedUser(Optional<User> optionalUser) {
 
         return optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));

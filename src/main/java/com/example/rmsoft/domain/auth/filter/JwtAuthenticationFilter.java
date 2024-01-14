@@ -3,7 +3,6 @@ package com.example.rmsoft.domain.auth.filter;
 
 import com.example.rmsoft.domain.auth.dto.AuthDto;
 import com.example.rmsoft.domain.auth.jwt.JwtTokenizer;
-import com.example.rmsoft.domain.auth.userdetails.UserDetail;
 import com.example.rmsoft.domain.user.entity.User;
 import com.example.rmsoft.global.util.Utility;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,9 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 

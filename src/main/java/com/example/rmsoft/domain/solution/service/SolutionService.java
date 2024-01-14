@@ -28,8 +28,16 @@ public class SolutionService {
 
         Solution foundSolution = findSolution(solutionId);
 
-        if (!foundSolution.getOs().contains(os)) throw new BusinessLogicException(ExceptionCode.NOT_SUPPORTED_OS);
+        checkValidOS(foundSolution, os);
 
         return foundSolution;
+    }
+
+    private void checkValidOS(Solution solution, OperatingSystem os) {
+
+        System.out.println(solution.getOs());
+        System.out.println(os);
+
+        if (!solution.getOs().contains(os)) throw new BusinessLogicException(ExceptionCode.NOT_SUPPORTED_OS);
     }
 }

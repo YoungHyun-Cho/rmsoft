@@ -2,7 +2,8 @@ package com.example.rmsoft.domain.subscription.controller;
 
 import com.example.rmsoft.domain.solution.entity.Solution;
 import com.example.rmsoft.domain.solution.service.SolutionService;
-import com.example.rmsoft.domain.subscription.dto.SubscriptionRequestDto;
+import com.example.rmsoft.domain.subscription.dto.SubscriptionPatchDto;
+import com.example.rmsoft.domain.subscription.dto.SubscriptionPostDto;
 import com.example.rmsoft.domain.subscription.dto.SubscriptionResponseDto;
 import com.example.rmsoft.domain.subscription.entity.Subscription;
 import com.example.rmsoft.domain.subscription.mapper.SubscriptionMapper;
@@ -10,6 +11,7 @@ import com.example.rmsoft.domain.subscription.service.SubscriptionService;
 import com.example.rmsoft.domain.user.entity.User;
 import com.example.rmsoft.domain.user.service.UserService;
 import com.example.rmsoft.global.util.Utility;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,11 +33,11 @@ public class SubscriptionController {
     private final SolutionService solutionService;
 
     @PostMapping
-    private ResponseEntity postSubscription(@RequestBody SubscriptionRequestDto subscriptionRequestDto) {
+    private ResponseEntity postSubscription(@Valid @RequestBody SubscriptionPostDto subscriptionPostDto) {
 
-        Subscription subscription = subscriptionMapper.subscriptionDtoToSubscription(subscriptionRequestDto);
-        User user = userService.findUser(subscriptionRequestDto.getUserId());
-        Solution solution = solutionService.findSolution(subscriptionRequestDto.getSolutionId(), subscriptionRequestDto.getOs());
+        Subscription subscription = subscriptionMapper.subscriptionDtoToSubscription(subscriptionPostDto);
+        User user = userService.findUser(subscriptionPostDto.getUserId());
+        Solution solution = solutionService.findSolution(subscriptionPostDto.getSolutionId(), subscriptionPostDto.getOs());
 
         subscription.setUser(user);
         subscription.setSolution(solution);
@@ -61,10 +63,12 @@ public class SubscriptionController {
 
     @PatchMapping("/{subscription-id}")
     private ResponseEntity patchExpiration(@PathVariable("subscription-id") Long subscriptionId,
-                                           @RequestBody SubscriptionRequestDto subscriptionRequestDto) {
+                                           @Valid @RequestBody SubscriptionPatchDto subscriptionPatchDto) {
 
-        subscriptionService.updateExpiration(subscriptionId, subscriptionRequestDto.getExpiration());
+        Subscription subscription = subscriptionService.updateExpiration(subscriptionId, subscriptionPatchDto.getExpiration());
 
-        return new ResponseEntity(HttpStatus.OK);
+        SubscriptionResponseDto subscriptionResponseDto = subscriptionMapper.subscriptionToSubscriptionDto(subscription);
+
+        return new ResponseEntity(subscriptionResponseDto, HttpStatus.OK);
     }
 }

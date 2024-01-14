@@ -33,10 +33,10 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) {
 
         Boolean isSignUp = request.getRequestURI().equals("/users") && request.getMethod().equals("POST");
-        Boolean isLogin = request.getRequestURI().equals("/auth/login") && request.getMethod().equals("POST");
+        Boolean isRefresh = request.getRequestURI().equals("/auth/refresh") && request.getMethod().equals("POST");
         String authorization = request.getHeader("Authorization");
 
-        return authorization == null || !authorization.startsWith("Bearer") || isSignUp || isLogin;
+        return authorization == null || !authorization.startsWith("Bearer") || isSignUp || isRefresh;
     }
 
     @Override
@@ -52,7 +52,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
             handleExpiredJwtException(response, e);
         }
-
     }
 
     private static void handleExpiredJwtException(HttpServletResponse response, JwtException e) {

@@ -1,5 +1,7 @@
 package com.example.rmsoft.global.value;
 
+import com.example.rmsoft.global.exception.BusinessLogicException;
+import com.example.rmsoft.global.exception.ExceptionCode;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 
@@ -22,6 +24,6 @@ public enum ServiceType {
         for (ServiceType serviceType : ServiceType.values()) {
             if (serviceType.type.equalsIgnoreCase(value)) return serviceType;
         }
-        throw new IllegalArgumentException("Invalid PartyState"); // 추후 예외 처리 필요
+        throw new BusinessLogicException(ExceptionCode.NOT_SUPPORTED_SERVICE_TYPE);
     }
 }

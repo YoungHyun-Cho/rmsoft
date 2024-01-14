@@ -5,6 +5,7 @@ import com.example.rmsoft.domain.user.entity.User;
 import com.example.rmsoft.domain.user.mapper.UserMapper;
 import com.example.rmsoft.domain.user.service.UserService;
 import com.example.rmsoft.global.util.Utility;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class UserController {
     private final UserMapper userMapper;
 
     @PostMapping
-    public ResponseEntity postUser(@RequestBody UserDto userDto) {
+    public ResponseEntity postUser(@Valid @RequestBody UserDto userDto) {
 
         User user = userService.createUser(userMapper.userDtoToUser(userDto));
 

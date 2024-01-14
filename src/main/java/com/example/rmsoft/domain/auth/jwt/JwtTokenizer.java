@@ -31,7 +31,7 @@ public class JwtTokenizer {
 
     @Getter
     @Value("${jwt.refresh-token-expiration-minutes}")
-    private int refreshTokenExpirationMinutes;
+    private Integer refreshTokenExpirationMinutes;
 
     public Jws<Claims> getClaims(String jws) {
 

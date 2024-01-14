@@ -28,7 +28,7 @@ public class Solution extends Auditable {
     private String version;
 
     @Column(nullable = false)
-    private Integer pricePerMonth;
+    private Integer pricePerDay;
 
     @Column(nullable = false, name = "operating_system")
     @Enumerated(EnumType.STRING)

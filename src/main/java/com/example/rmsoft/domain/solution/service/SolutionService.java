@@ -35,9 +35,6 @@ public class SolutionService {
 
     private void checkValidOS(Solution solution, OperatingSystem os) {
 
-        System.out.println(solution.getOs());
-        System.out.println(os);
-
         if (!solution.getOs().contains(os)) throw new BusinessLogicException(ExceptionCode.NOT_SUPPORTED_OS);
     }
 }

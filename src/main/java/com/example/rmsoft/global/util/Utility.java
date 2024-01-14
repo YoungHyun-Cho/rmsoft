@@ -47,10 +47,10 @@ public class Utility {
     public static URI makeURI(String path, Long value) {
 
         return UriComponentsBuilder
-                        .newInstance()
-                        .path(path)
-                        .buildAndExpand(value)
-                        .toUri();
+                .newInstance()
+                .path(path)
+                .buildAndExpand(value)
+                .toUri();
     }
 
     public static HttpHeaders setCookie(String accessToken, String refreshToken) {

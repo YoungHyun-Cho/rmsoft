@@ -22,15 +22,15 @@ public class DummyDataConfig {
         List<Solution> solutions = new ArrayList<>();
 
         solutions.add(new Solution(
-                1L, "ArchiveSolution", "1.3", 10000,
+                1L, "ArchiveSolution", "1.3", 1000,
                 new ArrayList<>(Arrays.asList(OperatingSystem.WINDOWS, OperatingSystem.MAC, OperatingSystem.LINUX))
         ));
         solutions.add(new Solution(
-                2L, "Cliveworks", "1.5", 20000,
+                2L, "Cliveworks", "1.5", 2000,
                 new ArrayList<>(Arrays.asList(OperatingSystem.WINDOWS, OperatingSystem.MAC))
         ));
         solutions.add(new Solution(
-                3L, "Archivistore", "1.7", 30000,
+                3L, "Archivistore", "1.7", 3000,
                 new ArrayList<>(Arrays.asList(OperatingSystem.WINDOWS, OperatingSystem.LINUX))
         ));
 

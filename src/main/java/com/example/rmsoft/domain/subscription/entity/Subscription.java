@@ -48,5 +48,5 @@ public class Subscription extends Auditable {
     private LocalDateTime expiration;
 
     @Column(nullable = false)
-    private Integer totalPrice;
+    private Long totalPrice;
 }

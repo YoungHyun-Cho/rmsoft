@@ -30,5 +30,5 @@ public class SubscriptionResponseDto {
 
     private Integer storageUsage;
 
-    private Integer totalPrice;
+    private Long totalPrice;
 }

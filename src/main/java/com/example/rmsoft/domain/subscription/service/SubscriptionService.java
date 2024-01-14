@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -46,18 +47,20 @@ public class SubscriptionService {
         return subscriptionRepository.save(subscription);
     }
 
-    private Integer calculateTotalPrice(Subscription subscription) {
+    private Long calculateTotalPrice(Subscription subscription) {
 
-        Period period = Period.between(LocalDateTime.now().toLocalDate(), subscription.getExpiration().toLocalDate());
+        Integer pricePerDay = subscription.getSolution().getPricePerDay();
+
+        Long period = ChronoUnit.DAYS.between(LocalDateTime.now().toLocalDate(), subscription.getExpiration().toLocalDate()) - 1;
 
         Double servicePrice =
-                subscription.getSolution().getPricePerMonth()
+                pricePerDay
                 * PriceConfig.multiplierByType(subscription.getServiceType())
                 * subscription.getUserCount();
 
         Integer storagePrice = PriceConfig.multiplierByStorage(subscription.getStorageCapacity());
 
-        return (servicePrice.intValue() + storagePrice) * (period.getDays() / 30);
+        return (servicePrice.intValue() + storagePrice) * period;
     }
 
     private void verifyExistSubscription(Subscription subscription) {

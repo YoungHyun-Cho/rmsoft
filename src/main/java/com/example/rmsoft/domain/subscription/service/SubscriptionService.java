@@ -57,7 +57,7 @@ public class SubscriptionService {
 
         Integer storagePrice = PriceConfig.multiplierByStorage(subscription.getStorageCapacity());
 
-        return (servicePrice.intValue() + storagePrice) * period.getDays();
+        return (servicePrice.intValue() + storagePrice) * (period.getDays() / 30);
     }
 
     private void verifyExistSubscription(Subscription subscription) {
